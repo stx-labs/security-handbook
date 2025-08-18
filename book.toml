@@ -1,0 +1,5 @@
+[book]
+authors = ["aldur"]
+language = "en"
+src = "src"
+title = "Stacks Security Handbook"
