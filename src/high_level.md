@@ -14,7 +14,7 @@ external wallet keys will do the rest.
 ### No cryptographic keys
 
 You MUST NOT, under any circumstances, store cryptographic keys or wallet seeds
-where an attacker can read them from your machine. This includes NOT storing
+where an attacker can read them from your machine. You MUST NOT store
 them in a password manager, as files, images, etc. Instead, use [hardware
 wallets](./cryptographic_wallets.md).
 
@@ -24,17 +24,17 @@ cryptographic keys from it _if they are not there_.
 ### 2FA: Always and on hardware devices
 
 You MUST enable [two-factor authentication](./second_factors.md) on any and
-all your accounts. The [second factor](./second_factors.md) MUST be on a
-separate device (e.g., your smartphone, or a hardware key).
+all your accounts. The second factor MUST be a [hardware
+device](./hardware_devices.md) (e.g., your smartphone, or a security key).
 
-> Ideally, your organization will implement [single-sign
-  on](https://en.wikipedia.org/wiki/Single_sign-on) on as many services as
-  possible. This way, you will only need to handle one account (e.g., the
-  Google Workspace one).
+> Your organization will implement [Single
+  sign-on](https://en.wikipedia.org/wiki/Single_sign-on) on as many services as
+  possible. This way, you will only need to handle one account (e.g.,
+  for Google Workspace).
 
 **Why?**: An attacker who compromised your device might be able to get your
-passwords, but they won't be sufficient without their second factor (which will
-NOT be on your device, but on separate hardware).
+passwords, but they won't be sufficient without second factor (which will NOT
+be on your device, but on separate hardware).
 
 ### Separate devices for work
 
