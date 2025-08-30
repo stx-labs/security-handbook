@@ -15,6 +15,6 @@ To combat phishing attacks, there are a number of techniques which users can emp
 1. Turn off automatic image loading.  Images can be used to obscure link targets, and can even be used in direct exploits (see below).  Web bugs (invisible images) allow attackers to know that you are viewing an attack email from a vulnerable email client.
 2. Turn off Javascript.  This can also be used to obscure link targets, for direct exploits, and allow notifying attackers.
 3. Check the domain of all email senders.  An email purporting to be from Coinbase will never come from a Gmail account, or anywhere other than coinbase.com.  Often attackers' domains will begin with something reasonable, but then end in some foreign country code domain.
-4. If there is any doubt about the source of an email, use a secondard communications path (slack, telephone, etc) to verify its legitimacy.
+4. If there is any doubt about the source of an email, use a secondary communications path (slack, telephone, etc) to verify its legitimacy.
 5. Configure email clients to popup link targets WITHOUT automatically loading them.  This prevents attackers from being able to exploit certain rendering bugs when you haven't even clicked on the link.
 6. If there is any doubt about a link, manually go to a web browser and enter to the domain in question.  If a site needs you to handle something, there will be an option to do so after logging in.
