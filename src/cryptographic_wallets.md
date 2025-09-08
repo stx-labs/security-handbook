@@ -1,6 +1,6 @@
 # Cryptographic wallets
 
-A wallet holds a set of private keys (very large, random numbers) that can be used to spend coins. All these keys are generated from a seed phrase. The seed phrase is the key to the kingdom! You MUST NEVER store the seed phrase anywhere accessible via a device (be it a file, a digital note, a picture, or even an entry in a password manager). Similarly, you MUST NEVER share it with another user."
+A wallet holds a set of private keys (very large, random numbers) that can be used to spend coins. All these keys are generated from a seed phrase. The seed phrase is the key to the kingdom! You MUST NEVER store the seed phrase anywhere accessible via a device (be it a file, a digital note, a picture, or even an entry in a password manager). Similarly, you MUST NEVER share it with another user.
 
 ## Ground rules
 
