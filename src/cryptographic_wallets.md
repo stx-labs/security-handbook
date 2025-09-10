@@ -18,6 +18,14 @@ If you are storing up to $1M, you MUST use a hardware wallet, such as a Ledger d
 
 If you need to store more than $1M, you MUST [contact us](./contacts.md) for specific instructions.
 
+## Clear signing
+
+You MUST ALWAYS verify, to the extent possible, the destination address(es) of any transaction you send.  Many recent attacks, from ByBit to the latest NPM poisonings, have surreptitiously replaced user specified output addresses with attacker addresses, resulting in stolen funds.  In some cases the true output addresses were displayed after alteration, in others not.
+
+To combat this, Ledger devices support [clear signing](https://www.ledger.com/academy/topics/ledgersolutions/what-is-clear-signing).  This uses the hardware screen of a Ledger device to display a human readable description of the transaction and its outputs before you agree to sign.  While the frontend app that interacts with your Ledger device may more easily be compromised, the hardware screen is much more resistent to such attacks.
+
+So for software wallets, you MUST ALWAYS confirm the details before agreeing to sign.  For cold wallets, you MUST ALWAYS confirm the details on the hardware screen.
+
 ## Hardware wallets
 
 Below we will include specific instructions for configuring various hardware wallets.
