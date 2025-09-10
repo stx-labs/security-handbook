@@ -25,9 +25,9 @@ All the attacks we have witnessed so far against our ecosystem play by this book
 Once Stacks Labs will be fully setup, we will provide devices equipped with an EDR (Crowdstrike) that will warn if you are a victim to common threats and alert the team in case someone is trying to hack you.
 Meanwhile, follow these recommendations:
 
-1. No software wallets: you MUST NOT store wallet / seeds on your machine under any circumstances. Use [hardware devices](./cryptographic_wallets.md), such as a Ledger X.
-    1. If you need to share a wallet with a team member, do a 1/N on Asigna backed by a Ledger device instead of sharing the seed with your colleagues.
-    2. For very small amounts (e.g., <1000 USD), you MAY use a wallet app on your phone.  You MUST download it from the App Store and that is not a scam wallet).
+1. No software wallets: you MUST NOT store wallet / seeds on your machine under any circumstances. Use [hardware devices](./cryptographic_wallets.md#hardware-wallets), such as a Ledger X.
+    1. If you need to [share a wallet](./cryptographic_wallets.md#cold-wallets-1m) with a team member, do a 1/N on Asigna backed by a Ledger device instead of sharing the seed with your colleagues.
+    2. For [very small amounts](./cryptographic_wallets.md#warm-wallets-1k) (e.g., <1000 USD), you MAY use a wallet app on your phone.  You MUST download it from the App Store and that is not a scam wallet).
 2. [MFA](./mfa.md) everywhere: you MUST enable multi-factor authentication on ALL your work services. You MUST use Yubikeys (hardware security keys) for second factors. You MUST NOT store the second factor in a password manager.
 3. Check email domains: an email purporting to be from Coinbase will never come from a Gmail account, or anywhere other than coinbase.com.  Often attackers' domains will begin with something reasonable, but then end in some foreign country code domain.
 4. Check email headers: in Gmail, to the far right of the sender is a drop down menu.  One of the options is `Show original`, which will open a page containing the raw source of the email.  This will bypass attempts to obfuscate link targets.
