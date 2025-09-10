@@ -32,4 +32,4 @@ Meanwhile, follow these recommendations:
 3. Check email domains: an email purporting to be from Coinbase will never come from a Gmail account, or anywhere other than coinbase.com.  Often attackers' domains will begin with something reasonable, but then end in some foreign country code domain.
 4. Check email headers: in Gmail, to the far right of the sender is a drop down menu.  One of the options is `Show original`, which will open a page containing the raw source of the email.  This will bypass attempts to obfuscate link targets.
 5. You MUST use a secondary communications path (slack, telephone, etc) to verify the legitimacy of any communication where you doubt the authenticity.
-6. You MUST manually go to a web browser and enter domain when the source is in question.  If a site needs you to handle something, there will be an option to do so after logging in.
+6. You MUST manually go to a web browser and enter the domain when the source is in question.  If a site needs you to handle something, there will be an option to do so after logging in.
