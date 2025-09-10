@@ -20,11 +20,13 @@ If you need to store more than $1M, you MUST [contact us](./contacts.md) for spe
 
 ## Clear signing
 
-You MUST ALWAYS verify, to the extent possible, the destination address(es) of any transaction you send.  Many recent attacks, from ByBit to the latest NPM poisonings, have surreptitiously replaced user specified output addresses with attacker addresses, resulting in stolen funds.  In some cases the true output addresses were displayed after alteration, in others not.
+You MUST ALWAYS verify, to the extent possible, the destination address(es) of any transaction you send.  Many recent attacks, from [ByBit](https://cointelegraph.com/learn/articles/how-the-bybit-hack-happened) to the latest [NPM poisonings](https://www.aikido.dev/blog/npm-debug-and-chalk-packages-compromised), have surreptitiously replaced user specified output addresses with attacker addresses, resulting in stolen funds.  In some cases the true output addresses were displayed after alteration, in others not.
 
 To combat this, Ledger devices support [clear signing](https://www.ledger.com/academy/topics/ledgersolutions/what-is-clear-signing).  This uses the hardware screen of a Ledger device to display a human readable description of the transaction and its outputs before you agree to sign.  While the frontend app that interacts with your Ledger device may more easily be compromised, the hardware screen is much more resistent to such attacks.
 
-So for software wallets, you MUST ALWAYS confirm the details before agreeing to sign.  For cold wallets, you MUST ALWAYS confirm the details on the hardware screen.
+When you verify an output address such as a smart contract (SC), you MUST verify the address from an external source, such as previously downloaded documentation.  User wallet addresses MUST also be verified; when possible, this should include a voice call with the user in question where the address is read and the voice is recognized.
+
+So for software wallets, you MUST ALWAYS confirm the details before agreeing to sign. This will NOT stop all attacks, which is why you SHOULD ALWAYS consider using hardware wallets even when not required to do so.  For hardware wallets, you MUST ALWAYS confirm the details on the hardware screen.
 
 ## Hardware wallets
 
