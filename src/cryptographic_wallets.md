@@ -24,7 +24,7 @@ You MUST ALWAYS verify, to the extent possible, the destination address(es) of a
 
 To combat this, Ledger devices support [clear signing](https://www.ledger.com/academy/topics/ledgersolutions/what-is-clear-signing).  This uses the hardware screen of a Ledger device to display a human readable description of the transaction before you agree to sign.  While the frontend app that interacts with your Ledger device may more easily be compromised, the hardware screen is much more resistent to such attacks.
 
-When you verify an output address such as a smart contract (SC), you MUST verify the address from an external source, such as previously downloaded documentation.  SC calls though involve not just addresses, but also functions and parameters; verify that the entire SC call is what you are   User wallet addresses MUST also be verified; when possible, this should include a voice call with the user in question where the address is read and the voice is recognized.
+When you verify an output address such as a smart contract (SC), you MUST verify the address from an external source, such as previously downloaded documentation.  SC calls though involve not just addresses, but also functions and parameters; verify that the entire SC call is what you have intended.  User wallet addresses MUST also be verified; when possible, this should include a voice call with the user in question where the address is read and the voice is recognized.
 
 So for software wallets, you MUST ALWAYS confirm the details before agreeing to sign. This will NOT stop all attacks, which is why you SHOULD ALWAYS consider using hardware wallets even when not required to do so.  For hardware wallets, you MUST ALWAYS confirm the details on the hardware screen.
 
