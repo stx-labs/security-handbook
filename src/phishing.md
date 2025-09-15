@@ -22,9 +22,6 @@ All the attacks we have witnessed so far against our ecosystem play by this book
 
 ## How to protect yourself
 
-Once Stacks Labs will be fully setup, we will provide devices equipped with an EDR (Crowdstrike) that will warn if you are a victim to common threats and alert the team in case someone is trying to hack you.
-Meanwhile, follow these recommendations:
-
 1. No software wallets: you MUST NOT store wallet / seeds on your machine under any circumstances. Use [hardware devices](./cryptographic_wallets.md#hardware-wallets), such as a Ledger X.
     1. If you need to [share a wallet](./cryptographic_wallets.md#cold-wallets-1m) with a team member, do a 1/N on Asigna backed by a Ledger device instead of sharing the seed with your colleagues.
     2. For [very small amounts](./cryptographic_wallets.md#warm-wallets-1k) (e.g., <1000 USD), you MAY use a wallet app on your phone.  You MUST download it from the App Store and that is not a scam wallet).
