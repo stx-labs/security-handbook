@@ -28,7 +28,7 @@ Use `ssh-keygen` with the following args to create a key backed by the hardware 
 ```
 ssh-keygen -t ed25519-sk -O resident -O verify-required -C "comment"
 ```
-You MUST change `comment` to reflect how/where this key will be used (e.g. authentication, signing).
+You MUST change `comment` to reflect how/where this key will be used, and you SHOULD add the YubiKey serial number to specify the key.  For example `github-auth-yk-CARDNO`.
 
 Update the file permissions:
 ```
