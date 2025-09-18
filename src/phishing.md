@@ -30,5 +30,5 @@ Other than that, you MUST follow the [recommendations](./high_level.md) in this 
 
 1. No software wallets: you MUST NOT store wallet / seeds on your machine under any circumstances. Use [hardware devices](./cryptographic_wallets.md#hardware-wallets), such as a Ledger X.
     1. If you need to [share a wallet](./cryptographic_wallets.md#cold-wallets-1m) with a team member, do a 1/N on Asigna backed by a Ledger device instead of sharing the seed with your colleagues.
-    2. For [very small amounts](./cryptographic_wallets.md#warm-wallets-1k) (e.g., <1000 USD), you MAY use a wallet app on your phone.  You MUST download it from the App Store and that is not a scam wallet).
+    2. For [very small amounts](./cryptographic_wallets.md#warm-wallets-1k) (e.g., <1000 USD), you MAY use a wallet app on your phone.  You MUST download it from the App Store and make sure that is not a scam wallet).
 2. [MFA](./mfa.md) everywhere: you MUST enable multi-factor authentication on ALL your work services. You MUST use Yubikeys (hardware security keys) for second factors. You MUST NOT store the second factor in a password manager.
