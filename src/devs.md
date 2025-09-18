@@ -1,6 +1,6 @@
 # For developers
 
-Developers are a particularly vulnerable target for exploitation, since they must download and run code as part of their daily routine.  Recent attacks on the Stacks ecosystem began by exploiting developers, and then attempted to move laterally within and without the organization.
+Developers are a particularly vulnerable target for exploitation, since they must download and run code as part of their daily routine.  Most attacks begin by exploiting developers, and then attempt to move laterally within and without the organization.
 
 One specific attack vector which the Lazarus group is known to employ is fake interviews.  These have targeted both internal and external developers in the ecosystem.  This allows the attacker to request that a developer downloads a repository from GitHub, which is then used to infect the developer's machine.  Any locally stored credentials are extracted and exfiltrated; cryptographic wallets are drained, and exploit code is uploaded to any repository for which the developer has access.
 
