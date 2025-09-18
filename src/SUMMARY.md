@@ -7,6 +7,7 @@
   - [Hardware security keys](./hardware_security_keys.md)
   - [Multi-factor authentication](./mfa.md)
   - [Cryptographic wallets](./cryptographic_wallets.md)
+  - [Phishing attacks](./phishing.md)
   - [Work devices](./work_devices.md)
     - [Software updates](./software_updates.md)
 - [For developers](./devs.md):
