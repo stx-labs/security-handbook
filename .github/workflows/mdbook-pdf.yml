@@ -3,7 +3,7 @@ name: Builds a PDF from this mdBook
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: [main]
+    branches: [main, feat/build_pdf]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
