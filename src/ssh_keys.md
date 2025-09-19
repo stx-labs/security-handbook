@@ -2,15 +2,11 @@
 
 [Developers](./devs.md) MUST use SSH keys which are backed by [hardware security keys](./hardware_security_keys.md) when interacting with [GitHub](./github.md).  While it is possible to use an SSH key backed by a GPG key, a YubiKey allows having multiple SSH keys on a device, and the configuration is much more streamlined.
 
-## MacOS Setup
+## Setup
 
 ### SSH
 
-You MUST install `openssh` from `brew`, since the native `ssh` lacks `FIDO2` support:
-```
-brew update
-brew install openssh
-```
+Use your package manager to install `OpenSSH` (use brew for MacOS).  See [this](https://developers.yubico.com/SSH/Securing_SSH_with_FIDO2.html) for more details.
 
 ### YubiKey
 
