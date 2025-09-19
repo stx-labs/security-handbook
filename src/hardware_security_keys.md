@@ -45,11 +45,19 @@ This ensures that if it gets lost or stolen, an attacker cannot use it without
 also knowing the PIN.
 
 Go to the app Configuration, then navigate to "FIDO/Manage PIN". Follow the
-instructions to set a 4-digits PIN.
+instructions to set a 4-digits PIN.  Or use `ykman` from the command line:
+```
+ykman fido access change-pin
+Enter your new PIN:
+Repeat for confirmation:
+FIDO PIN updated.
+```
 
 If you are on iOS, you will need to use NFC instead of USB-C. Put your Yubikey
 on a table, touch it with the top of your iPhone. It will prompt you to open
 the authenticator.
+
+
 
 ### Set an OATH password
 

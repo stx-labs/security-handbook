@@ -10,13 +10,7 @@ Use your package manager to install `OpenSSH` (use brew for MacOS).  See [this](
 
 ### YubiKey
 
-You MUST set a PIN on your YubiKey.  You MAY use the `Yubico Authenticator` to do this, which is available via Mac App Store.  Advanced users MAY instead use `ykman` from `brew`, but must be careful to set a FIDO specific PIN:
-```
-ykman fido access change-pin
-Enter your new PIN: 
-Repeat for confirmation: 
-FIDO PIN updated.
-```
+You MUST set a [PIN](./hardware_security_keys.md#set-a-fido-pin) on your YubiKey.
 
 ## Generate a key
 
