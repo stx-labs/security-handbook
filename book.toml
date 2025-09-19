@@ -3,3 +3,8 @@ authors = ["aldur"]
 language = "en"
 src = "src"
 title = "Stacks Security Handbook"
+
+[output.html]
+
+[output.pdf]
+optional = true
