@@ -22,9 +22,9 @@ FIDO PIN updated.
 
 Use `ssh-keygen` with the following args to create a key backed by the hardware device:
 ```
-ssh-keygen -t ed25519-sk -O resident -O verify-required -C "comment"
+ssh-keygen -t ed25519-sk -O resident -O verify-required -C "github-auth-yk-CARDNO"
 ```
-You MUST change `comment` to reflect how/where this key will be used, and you SHOULD add the YubiKey serial number to specify the key.  For example `github-auth-yk-CARDNO`.
+You MUST change the `-C` comment to reflect how/where this key will be used, and you SHOULD add the YubiKey serial number to specify the key.
 
 You SHOULD NOT specify a password when creating the key, since it will only be used to lock the empty file on the filesystem.
 
@@ -35,7 +35,7 @@ chmod 600 ~/.ssh/id_ed25519_sk
 
 You MAY add additional keys by specifying a UID:
 ```
-ssh-keygen -t ed25519-sk -O resident -O verify-required -O application=ssh:<UID> -C "comment"
+ssh-keygen -t ed25519-sk -O resident -O verify-required -O application=ssh:<UID> -C "github-sign-yk-CARDNO"
 ```
 
 ## Regenerate a key on a separate machine
