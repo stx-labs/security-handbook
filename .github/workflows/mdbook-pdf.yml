@@ -11,7 +11,7 @@ on:
 permissions:
   contents: read
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# Allow only one concurrent deployment, canceling any in-progress or previously queued runs.
 concurrency:
   group: "pdf"
   cancel-in-progress: true
