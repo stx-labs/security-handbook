@@ -3,7 +3,7 @@ name: Builds a PDF from this mdBook
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: [main, feat/build_pdf]
+    branches: [main]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -21,7 +21,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8  # v5.0.0
       - uses: DeterminateSystems/nix-installer-action@90bb610b90bf290cad97484ba341453bd1cbefea # v19
       - name: Build PDF with mdBook
         run: nix build .#pdf
