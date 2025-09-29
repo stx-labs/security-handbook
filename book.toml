@@ -8,4 +8,4 @@ title = "Stacks Security Handbook"
 
 [output.pdf]
 optional = true
-page-ranges = "1-30"
+page-ranges = "1-26"

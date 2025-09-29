@@ -1,5 +1,11 @@
 # Work devices
 
+A separate work laptop allows ***you*** to **keep your work and life separate**, without having to worry about privacy or attacks spilling over your your personal accounts.
+
+When under stress the minute you discover your work account has been hacked, you don’t want to also be worried about securing your personal finance, your network perimeter, your family devices, etc. We have been through this and it is *not nice*.
+
+A work laptop also allows clearly separating the online identity you use for work and outside of it. For instance, it allows to easily create and use new accounts (GitHub, X, etc) for work, without having to constantly log-in and log-out or use separate browser profiles. For those of us who want to keep a reduced online footprint (e.g., do not link my personal X account with the one I use for Stacks) this also reduces the likelihood of using the wrong account in the first place and reveal the connection. For developers, a separate work device means separate CLI/git/SSH configuration, which could otherwise be very painful to manage.
+
 ## Context
 
 ### State-sponsored attackers
@@ -24,14 +30,6 @@ We need to take steps to prevent this from happening, and implement better secur
 #### Deploying hardened laptops
 
 Our strategy is based on the [Swiss Cheese Model](https://en.wikipedia.org/wiki/Swiss_cheese_model). Hardened laptops ensure an additional layer of defense to keep us all safe.
-
-#### Separate work profiles
-
-More importantly, a separate work laptop allows ***you*** to **keep your work and life separate**, without having to worry about privacy or attacks spilling over your your personal accounts.
-
-When under stress the minute you discover your work account has been hacked, you don’t want to also be worried about securing your personal finance, your network perimeter, your family devices, etc. We have been through this and it is *not nice*.
-
-A work laptop also allows clearly separating the online identity you use for work and outside of it. For instance, it allows to easily create and use new accounts (GitHub, X, etc) for work, without having to constantly log-in and log-out or use separate browser profiles. For those of us who want to keep a reduced online footprint (e.g., do not link my personal X account with the one I use for Stacks) this also reduces the likelihood of using the wrong account in the first place and reveal the connection. For developers, a separate work device means separate CLI/git/SSH configuration, which could otherwise be very painful to manage.
 
 ## **Endpoint Detection and Response (EDR)**
 
