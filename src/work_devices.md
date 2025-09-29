@@ -17,12 +17,6 @@ We have witnessed multiple attacks against the Stacks ecosystem, ranging from de
 
 The range of these attacks is wide and sophisticated and, as our ecosystem grows, the probability of succeed will only increase (due to an increased attack surface).
 
-### The cost of attacks
-
-When an attack succeeds, we spend ***hundreds of thousands*** of dollars to *identify the blast radius* (figure out what the attacker leaked or stole), contain the attack, and mitigate it.
-
-This is *only* accounting for operational costs (e.g., our time spent) and is not even considering the economics of a private key leak that could spend crypto, or the potential reputational damage to our ecosystem as a whole.
-
 ### How to fight back
 
 We need to take steps to prevent this from happening, and implement better security strategies, roll out coordinated policies and ensure that everyone is aligned on what to do and what to avoid (e.g., [keep your MFA on a Yubikey and nowhere else](./mfa.md)).
