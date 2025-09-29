@@ -43,12 +43,12 @@ EDR SHOULD NOT prevent you from doing things your way (e.g., installing `homebre
 
 You SHOULD pick and configure an EDR to do the following:
 
-1. **Alert us** in case of anomalies (e.g. a debugger attached to a password manager, a process enumerating files, uploading your home directory somewhere, etc.).
-    1. This will tell us when someone is hacked right away, giving us a chance to jump ahead of the attack (e.g., disabling users, rotating keys, etc.).
-    2. Without it, we would typically discover the hack when it’s too late.
+1. **Alert your organization** in case of anomalies (e.g. a debugger attached to a password manager, a process enumerating files, uploading your home directory somewhere, etc.).
+    1. This will tell your organization when someone is hacked right away, giving yourselves a chance to jump ahead of the attack (e.g., disabling users, rotating keys, etc.).
+    2. Without it, you would typically discover the hack when it’s too late.
 2. **Prevent *some* attacks** altogether.
     1. EDR is no magic bullet and won’t stop 0-days or very sophisticated attacks.
     2. You SHOULD ONLY deploy a solution that protects against *all* malicious payloads we have seen used in web3.
 3. Send an **audit trail** to a remote server.
-    1. This way, if someone gets hacked and the attacker deploys anti-forensics measures to cover their traces, we will still have trace of what happened on the machine.
-    2. With more visibility, comes more power to contain the attack and stop it from spreading. Without EDR, we have been running in the dark trying to figure out what the attacker did.
+    1. This way, if someone gets hacked and the attacker deploys anti-forensics measures to cover their traces, you will still have trace of what happened on the machine.
+    2. With more visibility, comes more power to contain the attack and stop it from spreading. Without EDR, you will be running in the dark trying to figure out what the attacker did.
