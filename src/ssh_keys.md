@@ -29,7 +29,8 @@ chmod 600 ~/.ssh/id_ed25519_sk
 
 ## Regenerate a key on a separate machine
 
-You MAY use this hardware backed SSH key on multiple machines. To do so, you MUST regenerate the key files on each machine:```
+You MAY use this hardware backed SSH key on multiple machines. To do so, you MUST regenerate the key files on each machine:
+```
 cd ~/.ssh/
 ssh-keygen -K
 ```
