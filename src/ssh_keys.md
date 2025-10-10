@@ -18,7 +18,7 @@ Use `ssh-keygen` with the following args to create a key backed by the hardware 
 
 The command for creating such keys will look like the following:
 ```
-ssh-keygen -t ed25519-sk -O resident -O verify-required -O 'application=ssh:user-function-CARDNO'
+ssh-keygen -t ed25519-sk -O resident -O verify-required -O 'application=ssh:function-CARDNO'
 ```
 You SHOULD structure your `UID` strings as `function-CARDNO`, where `function` is what the key will be used for, and `CARDNO` is the YubiKey serial number. You SHOULD NOT simply keep the string `function-CARDNO`.
 
