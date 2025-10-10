@@ -14,7 +14,9 @@ You MUST set a [PIN](./hardware_security_keys.md#set-a-fido-pin) on your YubiKey
 
 ## Generate a key
 
-Use `ssh-keygen` with the following args to create a key backed by the hardware device.  You MUST ALWAYS specify a unique `application=ssh:UID` string; this is used internally on the card to specify in which slot to store the key, replaces the `-C comment` field, and is exported when regenerating keys on other devices.
+Use `ssh-keygen` with the following args to create a key backed by the hardware device.  If you plan to store multiple ssh keys on your hardware device, you SHOULD ALWAYS identify the key using the `-O 'application=ssh:UID'` argument. The `UID` part is used internally on the card to specify in which slot to store the key, replacing the `-C comment` field, and is exported when regenerating keys on other devices.
+
+The command for creating such keys will look like the following:
 ```
 ssh-keygen -t ed25519-sk -O resident -O verify-required -O 'application=ssh:user-function-CARDNO'
 ```
