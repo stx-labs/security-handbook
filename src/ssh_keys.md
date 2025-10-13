@@ -22,8 +22,6 @@ ssh-keygen -t ed25519-sk -O resident -O verify-required -O 'application=ssh:func
 ```
 You SHOULD structure your `UID` strings as `function-CARDNO`, where `function` is what the key will be used for, and `CARDNO` is the YubiKey serial number. You SHOULD NOT simply keep the string `function-CARDNO`.
 
-Here is an example command to create some keys:
-
 You SHOULD NOT specify a password when creating the key, since it will only be used to lock the empty file on the filesystem.
 
 Update the file permissions:
