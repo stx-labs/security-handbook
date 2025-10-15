@@ -22,7 +22,10 @@ Finally, you MUST protect the main branch from deletion.
 
 Continuous integration is a powerful tool for preventing regressions in code, and allows us to make changes without unexpected side effects.  However, CI MUST be hardened in specific ways to avoid causing other problems.  
 
-1. You MUST NOT include secrets in CI!  Instead use the github `secrets` APIs, which allow fine grained access control.  This can for example limit access to specific jobs run by specific people.
+1. You MUST NEVER include secrets in CI!  Instead use the github `secrets` APIs, which allow fine grained access control.  This can for example limit access to specific jobs run by specific people.
 1. You MUST use OIDC for backend to backend authentication.  This allows the use of limited and expiring tokens in the place of passwords.
-1. You MUST require reviews for deployments.  This limits the blast radius of any compromise, preventing infected code from reaching users.
-
+1. You MUST require reviews for deployments, and use [environments](https://docs.github.com/en/actions/concepts/workflows-and-actions/deployment-environments).  This limits the blast radius of any compromise, preventing infected code from reaching users.
+1. You MUST pin actions to specific versions using the SHA.
+1. You MUST specify permissions used by all workflows, limited to the minimum needed to run.
+1. You SHOULD use [zizimor](https://github.com/zizmorcore/zizmor) to vet CI workflows.
+1. You SHOULD NEVER use `pull_request_target`, since in a public repo anyone can submit a pull request from a fork.
