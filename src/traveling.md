@@ -8,7 +8,7 @@ Traveling exposes you to special risks, like the [Evil Maid Attack](https://en.w
 
 1. You SHOULD keep a [low profile](https://a16zcrypto.com/posts/article/personal-physical-security/).
 1. You MUST NEVER leave a device unlocked AND unattended.
-1. You MUST use full disk encryption on any device which supports it.
+1. You MUST use full disk encryption on any device which supports it (with a [strong password](./work_devices.html#deploying-hardened-laptops))!
 1. You SHOULD power devices off before leaving them unattended, not simply lock them; this prevents a lockscreen compromise from granting access to the unencrypted disk contents.
 1. You SHOULD choose hotels which have in-room safes, which will reduce the number of people who have access to your devices while you are at dinner or the pool.
 1. You MAY use a screen protector to mitigate shoulder surfing.
