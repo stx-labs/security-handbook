@@ -31,6 +31,8 @@ We need to take steps to prevent this from happening, and implement better secur
 
 Our strategy is based on the [Swiss Cheese Model](https://en.wikipedia.org/wiki/Swiss_cheese_model). Hardened laptops ensure an additional layer of defense to keep us all safe.
 
+One important part of hardening a laptop is to enable [full disk encryption](https://en.wikipedia.org/wiki/Disk_encryption#Full_disk_encryption).  This prevents an attacker from accessing the hard drive directly, either to read data or implant malware.  In order to maximize the effect of disk encryption, a [strong password](https://pages.nist.gov/800-63-4/sp800-63b/passwords/) MUST be used.
+
 ## **Endpoint Detection and Response (EDR)**
 
 “*Endpoint Detection and Response*” or EDR is a fancy, enterprise term for a software that runs on your laptop and helps keeping it safe.  Companies in the ecosystem SHOULD pick an implementation that can be configured such that it will yield *low* false positives (e.g., it shouldn’t flag running `bitcoind` as malicious) and a good security posture. In other words, it will do its job and get out of the way, for all of us to do ours.
