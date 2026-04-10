@@ -12,6 +12,7 @@
     - [Software updates](./software_updates.md)
 - [For developers](./devs.md):
   - [SSH keys](./ssh_keys.md)
+    - [Agent forwarding](./agent_forwarding.md)
   - [Sharing Secrets](./sharing_secrets.md)
 - [For administrators](./admins.md):
   - [Separate admin accounts](./separate_admin_accounts.md)
