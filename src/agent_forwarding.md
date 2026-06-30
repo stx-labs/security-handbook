@@ -15,18 +15,6 @@ brew tap theseal/ssh-askpass
 brew install ssh-askpass
 ```
 
-#### Linux
-
-```
-# Debian/Ubuntu
-sudo apt install ssh-askpass-gnome
-
-# Fedora
-sudo dnf install openssh-askpass
-```
-
-> **Important:** Ubuntu and other GNOME-based distributions default to gnome-keyring's ssh-agent, which does NOT support FIDO2 PIN entry. You MUST use OpenSSH's `ssh-agent` instead. Disable gnome-keyring's SSH component and start `ssh-agent` manually or via your shell profile.
-
 ### Configure the environment
 
 Add to your shell rc file (`~/.zshrc`, `~/.bashrc`, etc.):
