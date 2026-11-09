@@ -6,6 +6,8 @@ title = "Stacks Security Handbook"
 
 [output.html]
 
+[output.markdown]
+
 [output.pdf]
 optional = true
 page-ranges = ""
