@@ -3,7 +3,7 @@
 
   outputs = { self, nixpkgs }:
     let
-      forAllSystems = f: nixpkgs.lib.genAttrs [ "x86_64-linux" "aarch64-linux" ]
+      forAllSystems = f: nixpkgs.lib.genAttrs [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ]
         (system: f nixpkgs.legacyPackages.${system});
     in {
       packages = forAllSystems (pkgs:
@@ -26,6 +26,7 @@
           } // extra);
         in {
           default = buildBook [ pkgs.mdbook ] { name = "mdBook"; };
+        } // pkgs.lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
           pdf = buildBook [ pkgs.mdbook pkgs.mdbook-pdf pkgs.ungoogled-chromium ] {
             name = "mdBook-pdf";
             FONTCONFIG_FILE = "${pkgs.fontconfig.out}/etc/fonts/fonts.conf";
@@ -34,6 +35,7 @@
 
       devShells = forAllSystems (pkgs: {
         default = pkgs.mkShellNoCC { nativeBuildInputs = [ pkgs.mdbook ]; };
+      } // pkgs.lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
         pdf = pkgs.mkShellNoCC {
           nativeBuildInputs = [ pkgs.mdbook pkgs.mdbook-pdf pkgs.ungoogled-chromium ];
         };
