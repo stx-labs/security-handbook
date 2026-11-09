@@ -1,6 +1,7 @@
 """Exercise the wrapper without real GitHub credentials or a security key."""
 import os
 import hashlib
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 import subprocess
 import tempfile
@@ -37,7 +38,7 @@ fi''')
   *refresh_token@-*) cat >/dev/null; printf called > "$TEST_ROOT/called"; printf '%s' '{"access_token":"access123","refresh_token":"newrefresh","expires_in":28800}' ;;
   *) exit 1 ;;
 esac''')
-        self.script("real-gh", 'printf "%s\\n" "$GH_TOKEN"')
+        self.script("real-gh", 'printf "%s\\n" "${GH_TOKEN:-no-token}"')
         self.env = dict(os.environ, HOME=str(self.home), GH_AGE_DIR=str(self.conf),
                         XDG_CONFIG_HOME=str(self.home / ".config"), GH_REAL=str(self.bin / "real-gh"),
                         PATH=str(self.bin) + ":" + os.environ["PATH"], TEST_ROOT=str(self.root))
@@ -105,6 +106,33 @@ esac''')
                      self.state / "expires_at", self.state / "expires_at.tmp",
                      self.conf / "refresh.age", self.conf / "refresh.age.tmp"):
             self.assertFalse(path.exists(), str(path))
+
+    def test_concurrent_first_invocations(self):
+        # Give all processes time to reach runtime-directory creation together.
+        self.script("mkdir", '''case "$*" in
+  *"/.gh-age-runtime") /bin/sleep 0.2 ;;
+esac
+exec /bin/mkdir "$@"''')
+        with ThreadPoolExecutor(max_workers=16) as pool:
+            results = list(pool.map(lambda _: self.run_wrapper("--version"), range(32)))
+        for result in results:
+            self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_subcommand_help_and_option_values(self):
+        for args in (("repo", "--help"), ("repo", "view", "-h"),
+                     ("repo", "view", "--repo", "owner/name", "--help"),
+                     ("repo", "view", "--repo=owner/name", "--help")):
+            with self.subTest(args=args):
+                result = self.run_wrapper(*args)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertEqual(result.stdout.strip(), "no-token")
+        for args in (("pr", "create", "--title", "--help"),
+                     ("pr", "create", "--title", "-h"),
+                     ("pr", "create", "--", "--help")):
+            with self.subTest(args=args):
+                result = self.run_wrapper(*args)
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn("no stored refresh token", result.stderr)
 
 
 if __name__ == "__main__":

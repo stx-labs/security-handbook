@@ -49,9 +49,7 @@ home_mode=${home_info#* }
 case "$home_mode" in *[!0-7]*|'') die "cannot inspect HOME permissions";; esac
 [ $((0$home_mode & 022)) -eq 0 ] || die "HOME must not be writable by other users"
 STATE="$HOME/.gh-age-runtime"
-if [ ! -e "$STATE" ] && [ ! -L "$STATE" ]; then
-  mkdir -m 700 "$STATE" || die "cannot create $STATE"
-fi
+mkdir -p -m 700 "$STATE" || die "cannot create $STATE"
 [ -d "$STATE" ] && [ ! -L "$STATE" ] || die "unsafe runtime directory: $STATE"
 state_info=$(dir_info "$STATE") || die "cannot inspect $STATE"
 state_owner=${state_info%% *}
@@ -96,6 +94,22 @@ case "${1:-}" in
   "" | -h | --help | help | --version | version | completion | __complete | __completeNoDesc)
     exec "$GH_REAL" "$@" ;;
 esac
+
+# Treat a help flag as such only when it cannot be an option's value. Unknown
+# options are conservatively assumed to take a value; -- ends option parsing.
+option_value=0
+for arg in "$@"; do
+  [ "$arg" != -- ] || break
+  if [ "$option_value" -eq 1 ]; then
+    option_value=0
+    continue
+  fi
+  case "$arg" in
+    -h|--help) exec "$GH_REAL" "$@" ;;
+    --*=*) ;;
+    -?*) option_value=1 ;;
+  esac
+done
 
 # Serialise token work: GitHub rotates the refresh token on every use, so two
 # concurrent refreshes would burn it.
