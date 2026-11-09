@@ -21,7 +21,7 @@ We will be using these keys for:
 
 - WebAuthn (_everyone_, used for passkeys)
 - OATH - TOTP (_everyone_, used for TOTPs)
-- FIDO2 (if you are a _developer_, used for SSH)
+- FIDO2 (if you are a _developer_, used for SSH and [`gh`](./gh_cli.md))
 - SmartCard / PIV (if you are a _developer_, used for SSH when FIDO2 is not an option)
 
 ## Configuration
@@ -73,6 +73,7 @@ Continue to use your hardware security key for:
 
 1. [Multi-factor authentication](./mfa.md)
 1. [SSH](./ssh_keys.md)
+1. [Using `gh` securely](./gh_cli.md)
 
 [0]: https://docs.yubico.com/software/yubikey/tools/authenticator/auth-guide/oath.html#password-protection
 [1]: https://smartmanagement.es/product/yubikey-5c-nfc/

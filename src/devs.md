@@ -10,3 +10,4 @@ Another attack vector which has often been employed against developers is the wa
 
 1. You MUST follow [these](./phishing.md) guidelines to avoid being phished.
 2. You MUST use hardware backed [SSH keys](./ssh_keys.md) when interacting with [GitHub](./github.md).
+3. If you use the [GitHub CLI (`gh`)](./gh_cli.md), you MUST configure it securely so it does not bypass your hardware-backed SSH keys.
