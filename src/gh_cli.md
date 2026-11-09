@@ -88,18 +88,27 @@ gh auth logout
 3. Remove any `export GH_TOKEN=$(gh auth token)` lines from your shell startup
    files or scripts.
 
-### 3. Force SSH for Git
+### 3. Use SSH for Git pushes
 
-`gh`'s HTTPS credential helper bypasses the wrapper. Route all GitHub `git` traffic over SSH instead:
+`gh`'s HTTPS credential helper bypasses the wrapper. Configure Git to use SSH
+for pushes to GitHub and Gists while leaving HTTPS fetch URLs unchanged:
 
 ```sh
-git config --global url."git@github.com:".insteadOf "https://github.com/"
-git config --global url."git@gist.github.com:".insteadOf "https://gist.github.com/"
-git config --global --unset-all credential.https://github.com.helper
-git config --global --unset-all credential.https://gist.github.com.helper
+git config --global --add url."git@github.com:".pushInsteadOf "https://github.com/"
+git config --global --add url."git@gist.github.com:".pushInsteadOf "https://gist.github.com/"
+git config --global --unset-all credential.https://github.com.helper || true
+git config --global --unset-all credential.https://gist.github.com.helper || true
 ```
 
-Confirm no GitHub credential helpers remain (this should print nothing):
+Other rewrite rules or a remote's explicit `pushurl` can override this setup.
+In a repository with an HTTPS GitHub `origin`, check the effective URLs:
+
+```sh
+git remote get-url origin         # https://github.com/...
+git remote get-url --push origin  # git@github.com:...
+```
+
+Confirm no GitHub-specific global credential helpers remain (this should print nothing):
 
 ```sh
 git config --global --get-regexp 'credential.*github'
