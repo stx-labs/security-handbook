@@ -11,6 +11,8 @@
           buildBook = inputs: withPdf: extra: pkgs.stdenvNoCC.mkDerivation ({
             src = pkgs.lib.cleanSource self;
             nativeBuildInputs = inputs;
+            # mdbook-linkcheck2 initializes a TLS client even for offline checks.
+            SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
             buildPhase = ''
               mdbook build
               # Publish processed Markdown at both chapter.md and chapter.html.md.
