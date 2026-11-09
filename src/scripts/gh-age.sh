@@ -95,9 +95,54 @@ case "${1:-}" in
     exec "$GH_REAL" "$@" ;;
 esac
 
-# Treat a help flag as such only when it cannot be an option's value. Known
-# boolean flags are scoped to their command; unknown options conservatively
-# take a value. -- ends option parsing.
+# Ask gh for the built-in command's flag descriptions, without passing any of
+# the user's flags or invoking an extension. Unknown options remain ambiguous.
+command_help() {
+  case "${1:-}" in
+    api|agent-task|alias|attestation|auth|browse|cache|codespace|completion|config|discussion|gist|gpg-key|issue|label|org|pr|project|release|repo|ruleset|run|search|secret|ssh-key|status|variable|workflow) ;;
+    *) return 1 ;;
+  esac
+  # Do not pass resource arguments to the probe. Only known nested command
+  # groups need a third word.
+  case "${2:-}" in ''|-*|*[!a-zA-Z0-9_./:-]*) GH_AGE_HELP_PROBE=1 "$GH_REAL" "$1" --help ;;
+    *) case "$1:$2:${3:-}" in
+         repo:autolink:[a-z]*|repo:deploy-key:[a-z]*|repo:gitignore:[a-z]*|repo:license:[a-z]*|issue:artifact:[a-z]*|codespace:ports:[a-z]*)
+           case "$3" in *[!a-zA-Z0-9_-]*) return 1 ;; esac
+           GH_AGE_HELP_PROBE=1 "$GH_REAL" "$1" "$2" "$3" --help ;;
+         api:*|browse:*|status:*|completion:*) GH_AGE_HELP_PROBE=1 "$GH_REAL" "$1" --help ;;
+         *) GH_AGE_HELP_PROBE=1 "$GH_REAL" "$1" "$2" --help ;;
+       esac ;;
+  esac
+}
+
+# Only inspect help metadata when a help flag might occur before a separator.
+possible_help=0
+for arg in "$@"; do
+  [ "$arg" != -- ] || break
+  case "$arg" in -h|--help) possible_help=1; break ;; esac
+done
+boolean_flags='|'
+if [ "$possible_help" -eq 1 ]; then
+  help_text=$(NO_COLOR=1 CLICOLOR=0 TERM=dumb command_help "$@" 2>/dev/null) || help_text=''
+  boolean_flags=$(printf '%s\n' "$help_text" | awk '
+    /^FLAGS$/ || /^INHERITED FLAGS$/ { section=1; next }
+    /^[A-Z][A-Z ]*$/ { section=0 }
+    section && /^  / {
+      sub(/^ +/, "")
+      short=""
+      if ($0 ~ /^-[[:alnum:]], /) { short=substr($0, 1, 2); sub(/^-[[:alnum:]], /, "") }
+      if ($0 ~ /^--[[:alnum:]-]+  /) {
+        sub(/  .*/, "")
+        printf "|%s", $0
+        if (short != "") printf "|%s", short
+      }
+    }
+    END { printf "|" }
+  ')
+fi
+
+# Treat a help flag as such only when it cannot be an option's value. Unknown
+# options are conservatively assumed to take a value; -- ends option parsing.
 option_value=0
 for arg in "$@"; do
   [ "$arg" != -- ] || break
@@ -105,14 +150,10 @@ for arg in "$@"; do
     option_value=0
     continue
   fi
-  case "${1:-}:$arg" in
-    api:--allow-escape-sequences|api:-i|api:--include|api:--paginate|api:--silent|api:--slurp|api:--verbose)
-      continue ;;
-  esac
   case "$arg" in
     -h|--help) exec "$GH_REAL" "$@" ;;
     --*=*) ;;
-    -?*) option_value=1 ;;
+    -?*) case "$boolean_flags" in *"|$arg|"*) ;; *) option_value=1 ;; esac ;;
   esac
 done
 

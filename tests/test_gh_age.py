@@ -38,7 +38,21 @@ fi''')
   *refresh_token@-*) cat >/dev/null; printf called > "$TEST_ROOT/called"; printf '%s' '{"access_token":"access123","refresh_token":"newrefresh","expires_in":28800}' ;;
   *) exit 1 ;;
 esac''')
-        self.script("real-gh", 'printf "%s\\n" "${GH_TOKEN:-no-token}"')
+        self.script("real-gh", '''if [ "${GH_AGE_HELP_PROBE:-}" = 1 ]; then
+  cat <<'EOF'
+FLAGS
+  -w, --web              Open in browser
+      --paginate         Fetch all pages
+      --silent           Suppress output
+  -i, --include          Include headers
+  -f, --field string     Add a field
+      --title string     Set title
+INHERITED FLAGS
+  -R, --repo string      Select repository
+EOF
+else
+  printf "%s\\n" "${GH_TOKEN:-no-token}"
+fi''')
         self.env = dict(os.environ, HOME=str(self.home), GH_AGE_DIR=str(self.conf),
                         XDG_CONFIG_HOME=str(self.home / ".config"), GH_REAL=str(self.bin / "real-gh"),
                         PATH=str(self.bin) + ":" + os.environ["PATH"], TEST_ROOT=str(self.root))
@@ -122,6 +136,9 @@ exec /bin/mkdir "$@"''')
 
     def test_subcommand_help_and_option_values(self):
         for args in (("repo", "--help"), ("repo", "view", "-h"),
+                     ("pr", "list", "--web", "--help"),
+                     ("repo", "view", "--web", "--help"),
+                     ("repo", "view", "-w", "--help"),
                      ("api", "--paginate", "--help"),
                      ("api", "--paginate", "--silent", "--help"),
                      ("api", "--include", "--help"),
@@ -132,7 +149,6 @@ exec /bin/mkdir "$@"''')
                 self.assertEqual(result.returncode, 0, result.stderr)
                 self.assertEqual(result.stdout.strip(), "no-token")
         for args in (("pr", "create", "--title", "--help"),
-                     ("pr", "create", "--paginate", "--help"),
                      ("api", "--field", "--help"),
                      ("api", "--paginate", "--field", "--help"),
                      ("pr", "create", "--title", "-h"),
