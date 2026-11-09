@@ -23,9 +23,9 @@ cryptographic keys from it _if they are not there_.
 
 ### 2FA: Always and on hardware devices
 
-You MUST enable [two-factor authentication](./second_factors.md) on any and
+You MUST enable [two-factor authentication](./mfa.md) on any and
 all your accounts. The second factor MUST be a [hardware
-device](./hardware_devices.md) (e.g., your smartphone, or a security key).
+device](./hardware_security_keys.md) (e.g., your smartphone, or a security key).
 
 > Your organization will implement [Single
   sign-on](https://en.wikipedia.org/wiki/Single_sign-on) on as many services as

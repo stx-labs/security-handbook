@@ -15,7 +15,7 @@ Here are the "multiple factors" we will be using:
 You MUST enable multi-factor authentication for all your accounts on all
 services. For this to be effective, you MUST keep factors separate from each
 other. This means that you MUST NOT store your second factor in your password
-manager. Instead, use [hardware security keys](#using-hardware-devices).
+manager. Instead, use [hardware security keys](./hardware_security_keys.md).
 
 ## Which second factor
 
@@ -29,8 +29,8 @@ phishing](https://www.passkeycentral.org/introduction-to-passkeys/passkey-securi
 If a service allows you to use passkeys as a second factor, you MUST prefer it
 to any other method. Setting things up depend on each service, for instance:
 
-1. [Google](https://myaccount.google.com/signinoptions/passkeys.md)
-1. [GitHub](https://github.com/settings/security.md)
+1. [Google](https://myaccount.google.com/signinoptions/passkeys)
+1. [GitHub](https://github.com/settings/security)
 
 When authenticating to a service, you will be asked for a username and
 password, then prompted to insert your security key, insert its [FIDO

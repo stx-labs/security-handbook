@@ -21,6 +21,8 @@ jobs:
         with:
           persist-credentials: false
       - uses: DeterminateSystems/nix-installer-action@3138316df39ed29be04236d7ffc686fa525866aa # v23
+      - name: Check flake
+        run: nix flake check
       - name: Build HTML and PDF
         run: |
           nix build .#default --out-link result-html

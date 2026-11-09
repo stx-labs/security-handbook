@@ -11,6 +11,10 @@ create-missing = false
 
 [output.markdown]
 
-[output.pdf]
-optional = true
-page-ranges = ""
+[output.linkcheck]
+command = "mdbook-linkcheck2"
+# Keep link checks offline; external HTTP links are not checked.
+follow-web-links = false
+warning-policy = "error"
+# These URLs are generated after mdBook runs and checked in the HTML output.
+exclude = ['^\./(?:phishing(?:\.html)?%2Emd|index(?:\.html)?%2Emd|llms(?:-full)?\.txt)$']
