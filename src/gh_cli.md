@@ -53,7 +53,7 @@ echo 'export PATH="$HOME/go/bin:$PATH"' >> ~/.zshrc
 export PATH="$HOME/go/bin:$PATH"
 ```
 
-This installs [FiloSottile's FIDO2 plugin][1] using Go's default binary directory.
+This installs [FiloSottile's FIDO2 plugin][fido2prf] using Go's default binary directory.
 If you have set `GOBIN` or `GOPATH`, add the corresponding binary directory to
 `PATH` instead. Confirm that `age-plugin-fido2prf` is on your `PATH`.
 
@@ -66,7 +66,7 @@ gh auth logout
 ```
 
 1. Revoke **GitHub CLI** at
-   [github.com/settings/applications][0]
+   [github.com/settings/applications][github-applications]
    to invalidate all previously issued tokens across your machines.
 2. Open **Keychain Access**, search for `gh:github.com`, and delete any
    remaining entries.
@@ -79,6 +79,7 @@ gh auth logout
 
 ```sh
 git config --global url."git@github.com:".insteadOf "https://github.com/"
+git config --global url."git@gist.github.com:".insteadOf "https://gist.github.com/"
 git config --global --unset-all credential.https://github.com.helper
 git config --global --unset-all credential.https://gist.github.com.helper
 ```
@@ -111,9 +112,10 @@ instead of `src/scripts/gh-age.sh`.
 ### 5. Generate the FIDO2 identity
 
 ```sh
-mkdir -p ~/.config/gh-age
+gh_age_dir="${GH_AGE_DIR:-${XDG_CONFIG_HOME:-$HOME/.config}/gh-age}"
+mkdir -p "$gh_age_dir"
 umask 077
-age-plugin-fido2prf -generate age-encryption.org > ~/.config/gh-age/identity
+age-plugin-fido2prf -generate age-encryption.org > "$gh_age_dir/identity"
 ```
 
 Insert only the intended YubiKey, then enter its FIDO PIN and touch it when
@@ -143,7 +145,7 @@ Verify that searching **Keychain Access** for `gh:github.com` returns nothing.
 - **Scripts:** Call `gh` (or `gh auth token`) on demand. Do not export or cache
   tokens in environment variables or files.
 - **Logging out:** Run `gh age-logout` to delete local tokens, and revoke
-  **GitHub CLI** at [github.com/settings/applications][0] to invalidate them
+  **GitHub CLI** at [github.com/settings/applications][github-applications] to invalidate them
   on GitHub.
 - **Scope changes:** Run `gh age-login --scopes scope1,scope2` to authorize a
   new token with additional scopes. The wrapper requests `repo`, `read:org`,
@@ -152,5 +154,5 @@ Verify that searching **Keychain Access** for `gh:github.com` returns nothing.
 - **Interrupted refresh:** If saving the rotated refresh token fails after
   GitHub has issued it, run `gh age-login` again.
 
-[0]: https://github.com/settings/applications
-[1]: https://github.com/FiloSottile/typage#age-plugin-fido2prf
+[github-applications]: https://github.com/settings/applications
+[fido2prf]: https://github.com/FiloSottile/typage#age-plugin-fido2prf

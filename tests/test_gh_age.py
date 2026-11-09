@@ -1,5 +1,6 @@
 """Exercise the wrapper without real GitHub credentials or a security key."""
 import os
+import hashlib
 from pathlib import Path
 import subprocess
 import tempfile
@@ -37,9 +38,11 @@ fi''')
   *) exit 1 ;;
 esac''')
         self.script("real-gh", 'printf "%s\\n" "$GH_TOKEN"')
-        self.env = dict(os.environ, HOME=str(self.home), GH_REAL=str(self.bin / "real-gh"),
+        self.env = dict(os.environ, HOME=str(self.home), GH_AGE_DIR=str(self.conf),
+                        XDG_CONFIG_HOME=str(self.home / ".config"), GH_REAL=str(self.bin / "real-gh"),
                         PATH=str(self.bin) + ":" + os.environ["PATH"], TEST_ROOT=str(self.root))
-        self.state = self.home / ".gh-age-runtime"
+        self.runtime = self.home / ".gh-age-runtime"
+        self.state = self.runtime / hashlib.sha256(os.fsencode(self.conf.resolve())).hexdigest()
 
     def script(self, name, source):
         path = self.bin / name
@@ -68,16 +71,40 @@ esac''')
         self.assertFalse((self.conf / "refresh.age").exists())
 
     def test_runtime_permissions_and_symlink(self):
-        self.state.mkdir(mode=0o755)
-        self.state.chmod(0o755)
+        self.runtime.mkdir(mode=0o755)
+        self.runtime.chmod(0o755)
         result = self.run_wrapper("api", "user")
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("mode 700", result.stderr)
-        self.state.rmdir()
-        self.state.symlink_to(self.root, target_is_directory=True)
+        self.runtime.rmdir()
+        self.runtime.symlink_to(self.root, target_is_directory=True)
         result = self.run_wrapper("api", "user")
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("unsafe runtime", result.stderr)
+
+    def test_configuration_caches_are_isolated(self):
+        self.assertEqual(self.run_wrapper("age-login").returncode, 0)
+        other = self.home / "other"
+        other.mkdir()
+        result = self.run_wrapper("api", "user", GH_AGE_DIR=str(other))
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("no stored refresh token", result.stderr)
+        self.assertNotIn("loginaccess", result.stdout)
+        alias = self.home / "alias"
+        alias.symlink_to(self.conf, target_is_directory=True)
+        result = self.run_wrapper("api", "user", GH_AGE_DIR=str(alias))
+        self.assertEqual(result.stdout.strip(), "loginaccess")
+
+    def test_logout_removes_staged_token_files(self):
+        self.assertEqual(self.run_wrapper("age-login").returncode, 0)
+        for path in (self.state / "access.tmp", self.state / "expires_at.tmp",
+                     self.conf / "refresh.age.tmp"):
+            path.write_text("staged")
+        self.assertEqual(self.run_wrapper("age-logout").returncode, 0)
+        for path in (self.state / "access", self.state / "access.tmp",
+                     self.state / "expires_at", self.state / "expires_at.tmp",
+                     self.conf / "refresh.age", self.conf / "refresh.age.tmp"):
+            self.assertFalse(path.exists(), str(path))
 
 
 if __name__ == "__main__":

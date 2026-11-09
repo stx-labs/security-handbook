@@ -12,7 +12,7 @@
 #   $GH_AGE_DIR (default ~/.config/gh-age)
 #     identity     age-plugin-fido2prf identity (requires the matching key)
 #     refresh.age  the encrypted refresh token
-#   $HOME/.gh-age-runtime (private, persists until logout or removal)
+#   $HOME/.gh-age-runtime/<configuration hash> (private, persists until logout)
 #     cached access token, its expiry, and a lock
 #
 # Needs: the real gh (2.103.0+), age, age-plugin-fido2prf, curl, jq, flock.
@@ -58,6 +58,26 @@ state_owner=${state_info%% *}
 state_mode=${state_info#* }
 [ "$state_owner" = "$uid" ] && [ "$state_mode" = 700 ] || die "$STATE must be owned by you with mode 700"
 
+# Resolve aliases of the same configuration to one cache and one lock. Never
+# reuse a cached token from a different configuration or account.
+mkdir -p "$CONF" || die "cannot create configuration directory: $CONF"
+CONF=$(CDPATH= cd -P "$CONF" && pwd -P) || die "cannot resolve configuration directory"
+IDENTITY="$CONF/identity"
+REFRESH="$CONF/refresh.age"
+if command -v sha256sum >/dev/null 2>&1; then
+  conf_hash=$(printf '%s' "$CONF" | sha256sum)
+else
+  conf_hash=$(printf '%s' "$CONF" | shasum -a 256)
+fi
+conf_hash=${conf_hash%% *}
+STATE="$STATE/$conf_hash"
+mkdir -p -m 700 "$STATE" || die "cannot create runtime directory: $STATE"
+[ -d "$STATE" ] && [ ! -L "$STATE" ] || die "unsafe runtime directory: $STATE"
+state_info=$(dir_info "$STATE") || die "cannot inspect $STATE"
+state_owner=${state_info%% *}
+state_mode=${state_info#* }
+[ "$state_owner" = "$uid" ] && [ "$state_mode" = 700 ] || die "$STATE must be owned by you with mode 700"
+
 # Find the real gh: GH_REAL if set, else the first gh on PATH that isn't us.
 : "${GH_REAL:=}"
 if [ -z "$GH_REAL" ]; then
@@ -87,7 +107,7 @@ save_refresh() { # token on stdin; FIDO2 verification is needed for encryption
   age -e -i "$IDENTITY" -o "$REFRESH.tmp" && mv "$REFRESH.tmp" "$REFRESH"
 }
 
-clear_cache() { rm -f "$STATE/access" "$STATE/expires_at"; }
+clear_cache() { rm -f "$STATE/access" "$STATE/access.tmp" "$STATE/expires_at" "$STATE/expires_at.tmp"; }
 
 access_token() {
   now=$(date +%s)
@@ -119,7 +139,7 @@ gh-age: if the refresh token was revoked or expired, run: gh age-login"
   # Save the rotated refresh token first: the old one is now dead.
   new_refresh=$(printf '%s' "$resp" | jq -r '.refresh_token // empty')
   if [ -z "$new_refresh" ]; then
-    rm -f "$REFRESH"
+    rm -f "$REFRESH" "$REFRESH.tmp"
     clear_cache
     die "refresh response did not contain a new refresh token; run: gh age-login"
   fi
@@ -194,7 +214,7 @@ case "${1:-}" in
     exit 0
     ;;
   age-logout)
-    rm -f "$REFRESH"
+    rm -f "$REFRESH" "$REFRESH.tmp"
     clear_cache
     echo "gh-age: local tokens deleted. To revoke them on GitHub, remove" >&2
     echo "gh-age: GitHub CLI at https://github.com/settings/applications" >&2

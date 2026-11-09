@@ -31,6 +31,19 @@
                 printf '\n## Complete handbook\n\n'
                 printf '%s\n' '- [Full handbook](./llms-full.txt): All chapters in one file.'
               } > book/html/llms.txt
+              # Reference definitions are document-wide when chapters are joined.
+              # Reject collisions rather than silently resolving links to the wrong URL.
+              : > reference-labels
+              sed -n 's/^[[:space:]]*- \[[^]]*\](\([^)]*\.md\)).*/\1/p' src/SUMMARY.md |
+                while IFS= read -r chapter; do
+                  sed -n 's/^[[:space:]]*\(\[[^]]*\]\):.*/\1/p' "book/markdown/$chapter" >> reference-labels
+                done
+              duplicates=$(tr '[:upper:]' '[:lower:]' < reference-labels | sort | uniq -d)
+              if [ -n "$duplicates" ]; then
+                echo "Duplicate Markdown reference labels in llms-full.txt:" >&2
+                echo "$duplicates" >&2
+                exit 1
+              fi
               {
                 printf '# Stacks Security Handbook\n\n'
                 sed -n 's/^[[:space:]]*- \[[^]]*\](\([^)]*\.md\)).*/\1/p' src/SUMMARY.md |
