@@ -47,13 +47,28 @@ use a USB key.
 ### 1. Install dependencies
 
 ```sh
-brew install age jq flock go libfido2 pkg-config
-go install filippo.io/typage/fido2prf/cmd/age-plugin-fido2prf@latest
-echo 'export PATH="$HOME/go/bin:$PATH"' >> ~/.zshrc
-export PATH="$HOME/go/bin:$PATH"
+brew install age jq flock go libfido2 openssl@3 pkg-config
+gh_age_build_dir=$(mktemp -d)
+if (
+  git clone --depth 1 --branch v0.2.4 \
+    https://github.com/FiloSottile/typage.git "$gh_age_build_dir/typage" &&
+  test "$(git -C "$gh_age_build_dir/typage" rev-parse HEAD)" = \
+    31e8d9aee8ca5fc1d12d1121abdc120ea3dcc43a &&
+  cd "$gh_age_build_dir/typage" &&
+  go install ./fido2prf/cmd/age-plugin-fido2prf
+); then
+  echo 'export PATH="$HOME/go/bin:$PATH"' >> ~/.zshrc
+  export PATH="$HOME/go/bin:$PATH"
+else
+  echo 'Plugin installation failed.' >&2
+fi
 ```
 
-This installs [FiloSottile's FIDO2 plugin][fido2prf] using Go's default binary directory.
+This builds [FiloSottile's FIDO2 plugin][fido2prf] from its GitHub `v0.2.4`
+tag, checking the commit before installing. If cloning, verification, or the
+build fails, stop and [contact security](./contacts.md). The build still
+downloads Go dependencies according to the repository's `go.mod` and `go.sum`.
+The plugin is installed in Go's default binary directory.
 If you have set `GOBIN` or `GOPATH`, add the corresponding binary directory to
 `PATH` instead. Confirm that `age-plugin-fido2prf` is on your `PATH`.
 
