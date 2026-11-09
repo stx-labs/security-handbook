@@ -8,7 +8,7 @@
     in {
       packages = forAllSystems (pkgs:
         let
-          buildBook = inputs: extra: pkgs.stdenvNoCC.mkDerivation ({
+          buildBook = inputs: withPdf: extra: pkgs.stdenvNoCC.mkDerivation ({
             src = pkgs.lib.cleanSource self;
             nativeBuildInputs = inputs;
             buildPhase = ''
@@ -52,24 +52,45 @@
                     printf '\n\n'
                   done
               } > book/html/llms-full.txt
+              # Check the rendered site as well: it includes generated files and
+              # the actual heading IDs used by the browser.
+              lychee --offline --include-fragments --no-progress --root-dir book/html 'book/html/**/*.html'
+              cp book/html/llms.txt book/html/.llms-linkcheck.md
+              lychee --offline --include-fragments --no-progress --root-dir book/html book/html/.llms-linkcheck.md
+              rm book/html/.llms-linkcheck.md
+              ${pkgs.lib.optionalString withPdf ''
+                # Wrap long code lines instead of clipping them in a paged PDF.
+                cat > pdf-print.css <<'EOF'
+              pre, pre code {
+                white-space: pre-wrap !important;
+                overflow-wrap: anywhere;
+              }
+              EOF
+                mkdir -p book/pdf
+                weasyprint --stylesheet pdf-print.css book/html/print.html book/pdf/output.pdf
+              ''}
               mv book $out
             '';
           } // extra);
         in {
-          default = buildBook [ pkgs.mdbook ] { name = "mdBook"; };
-        } // pkgs.lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
-          pdf = buildBook [ pkgs.mdbook pkgs.mdbook-pdf pkgs.ungoogled-chromium ] {
+          default = buildBook [ pkgs.mdbook pkgs.mdbook-linkcheck2 pkgs.lychee ] false { name = "mdBook"; };
+          pdf = buildBook [ pkgs.mdbook pkgs.mdbook-linkcheck2 pkgs.lychee pkgs.python3Packages.weasyprint ] true {
             name = "mdBook-pdf";
-            FONTCONFIG_FILE = "${pkgs.fontconfig.out}/etc/fonts/fonts.conf";
+            FONTCONFIG_FILE = pkgs.makeFontsConf { fontDirectories = [ pkgs.dejavu_fonts ]; };
           };
         });
 
       devShells = forAllSystems (pkgs: {
-        default = pkgs.mkShellNoCC { nativeBuildInputs = [ pkgs.mdbook ]; };
-      } // pkgs.lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
+        default = pkgs.mkShellNoCC { nativeBuildInputs = [ pkgs.mdbook pkgs.mdbook-linkcheck2 ]; };
         pdf = pkgs.mkShellNoCC {
-          nativeBuildInputs = [ pkgs.mdbook pkgs.mdbook-pdf pkgs.ungoogled-chromium ];
+          nativeBuildInputs = [ pkgs.mdbook pkgs.mdbook-linkcheck2 pkgs.python3Packages.weasyprint ];
         };
       });
+
+      # The handbook build checks Markdown references and rendered local links.
+      checks = forAllSystems (pkgs: {
+        links = self.packages.${pkgs.stdenv.hostPlatform.system}.default;
+      });
+
     };
 }

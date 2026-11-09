@@ -20,7 +20,7 @@ If you need to store more than $1M, you MUST [contact us](./contacts.md) for spe
 
 ## Clear signing
 
-You MUST ALWAYS verify, to the extent possible, the destination address(es) of any transaction you send.  Many recent attacks, from [ByBit](https://cointelegraph.com/learn/articles/how-the-bybit-hack-happened) to the latest [NPM poisonings](https://www.aikido.dev/blog/npm-debug-and-chalk-packages-compromised), have surreptitiously replaced user specified data with attacker data, resulting in stolen funds.  In some cases the true data displayed after alteration, in others not.
+You MUST ALWAYS verify, to the extent possible, the destination address(es) of any transaction you send.  Many recent attacks, from [ByBit](https://www.chainalysis.com/blog/bybit-exchange-hack-february-2025-crypto-security-dprk/) to the latest [NPM poisonings](https://www.aikido.dev/blog/npm-debug-and-chalk-packages-compromised), have surreptitiously replaced user specified data with attacker data, resulting in stolen funds.  In some cases the true data displayed after alteration, in others not.
 
 To combat this, Ledger devices support [clear signing](https://www.ledger.com/academy/topics/ledgersolutions/what-is-clear-signing).  This uses the hardware screen of a Ledger device to display a human readable description of the transaction before you agree to sign.  While the frontend app that interacts with your Ledger device may more easily be compromised, the hardware screen is much more resistent to such attacks.
 
