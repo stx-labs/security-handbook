@@ -4,6 +4,9 @@ language = "en"
 src = "src"
 title = "Stacks Security Handbook"
 
+[build]
+create-missing = false
+
 [output.html]
 
 [output.markdown]
