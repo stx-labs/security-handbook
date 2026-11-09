@@ -42,6 +42,8 @@ esac''')
         self.env = dict(os.environ, HOME=str(self.home), GH_AGE_DIR=str(self.conf),
                         XDG_CONFIG_HOME=str(self.home / ".config"), GH_REAL=str(self.bin / "real-gh"),
                         PATH=str(self.bin) + ":" + os.environ["PATH"], TEST_ROOT=str(self.root))
+        for name in ("GH_TOKEN", "GITHUB_TOKEN", "GH_ENTERPRISE_TOKEN", "GITHUB_ENTERPRISE_TOKEN"):
+            self.env.pop(name, None)
         self.runtime = self.home / ".gh-age-runtime"
         self.state = self.runtime / hashlib.sha256(os.fsencode(self.conf.resolve())).hexdigest()
 
@@ -120,6 +122,9 @@ exec /bin/mkdir "$@"''')
 
     def test_subcommand_help_and_option_values(self):
         for args in (("repo", "--help"), ("repo", "view", "-h"),
+                     ("api", "--paginate", "--help"),
+                     ("api", "--paginate", "--silent", "--help"),
+                     ("api", "--include", "--help"),
                      ("repo", "view", "--repo", "owner/name", "--help"),
                      ("repo", "view", "--repo=owner/name", "--help")):
             with self.subTest(args=args):
@@ -127,6 +132,9 @@ exec /bin/mkdir "$@"''')
                 self.assertEqual(result.returncode, 0, result.stderr)
                 self.assertEqual(result.stdout.strip(), "no-token")
         for args in (("pr", "create", "--title", "--help"),
+                     ("pr", "create", "--paginate", "--help"),
+                     ("api", "--field", "--help"),
+                     ("api", "--paginate", "--field", "--help"),
                      ("pr", "create", "--title", "-h"),
                      ("pr", "create", "--", "--help")):
             with self.subTest(args=args):

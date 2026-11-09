@@ -95,8 +95,9 @@ case "${1:-}" in
     exec "$GH_REAL" "$@" ;;
 esac
 
-# Treat a help flag as such only when it cannot be an option's value. Unknown
-# options are conservatively assumed to take a value; -- ends option parsing.
+# Treat a help flag as such only when it cannot be an option's value. Known
+# boolean flags are scoped to their command; unknown options conservatively
+# take a value. -- ends option parsing.
 option_value=0
 for arg in "$@"; do
   [ "$arg" != -- ] || break
@@ -104,6 +105,10 @@ for arg in "$@"; do
     option_value=0
     continue
   fi
+  case "${1:-}:$arg" in
+    api:--allow-escape-sequences|api:-i|api:--include|api:--paginate|api:--silent|api:--slurp|api:--verbose)
+      continue ;;
+  esac
   case "$arg" in
     -h|--help) exec "$GH_REAL" "$@" ;;
     --*=*) ;;
