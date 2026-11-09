@@ -20,7 +20,25 @@
                 cp "$file" "book/html/''${relative%.md}.html.md"
               done
               # mdBook also serves the first chapter as index.html.
+              cp book/markdown/introduction.md book/html/index.md
               cp book/markdown/introduction.md book/html/index.html.md
+              # Keep the agent index and complete text in the same order as the book.
+              {
+                printf '# Stacks Security Handbook\n\n'
+                printf '> Security requirements and guidance for the Stacks ecosystem.\n\n'
+                printf '## Chapters\n\n'
+                sed -n 's/^[[:space:]]*- \(\[[^]]*\]([^)]*\.md)\).*/- \1/p' src/SUMMARY.md
+                printf '\n## Complete handbook\n\n'
+                printf '%s\n' '- [Full handbook](./llms-full.txt): All chapters in one file.'
+              } > book/html/llms.txt
+              {
+                printf '# Stacks Security Handbook\n\n'
+                sed -n 's/^[[:space:]]*- \[[^]]*\](\([^)]*\.md\)).*/\1/p' src/SUMMARY.md |
+                  while IFS= read -r chapter; do
+                    cat "book/markdown/$chapter"
+                    printf '\n\n'
+                  done
+              } > book/html/llms-full.txt
               mv book $out
             '';
           } // extra);

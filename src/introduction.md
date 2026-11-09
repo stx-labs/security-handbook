@@ -21,3 +21,15 @@ In practice, this means that this handbook will tell _both_ the requirements and
 Where possible, a secure setup should be the default (e.g., when using a pre-configured laptop).
 
 You _SHOULD NOT_ deviate from what is recommended unless you have an _excellent reason to do that_. If you think that's the case, check with your line manager.
+
+## Having AI agents help
+
+Every handbook chapter is also available as plain Markdown. Replace `.html`
+with `.md` in a chapter's URL, or append `.md` to the HTML URL. For example,
+[phishing.html](./phishing.html) is available as [phishing.md](./phishing%2Emd) and
+[phishing.html.md](./phishing.html%2Emd). The home page is available as
+[index.md](./index%2Emd) or [index.html.md](./index.html%2Emd).
+
+If you are using an AI assistant or agent, point it to [llms.txt](./llms.txt)
+for an index of the Markdown chapters, or to [llms-full.txt](./llms-full.txt)
+for the complete handbook in one file.
