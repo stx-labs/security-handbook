@@ -178,6 +178,7 @@ access_token() {
   fi
 
   [ -f "$REFRESH" ] || die "no stored refresh token; run: gh age-login"
+  [ -t 0 ] && [ -t 2 ] || die "token expired; run 'gh api user' in a terminal"
   echo "gh-age: refreshing GitHub token (YubiKey PIN/touch may be needed)" >&2
 
   # Do not contact GitHub if decryption fails. Keep the token off the command line.
